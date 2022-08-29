@@ -20,12 +20,19 @@ package me.devgabi.arcano
 
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import java.lang.System.getenv
 import me.devgabi.arcano.plugins.configureMonitoring
 import me.devgabi.arcano.plugins.configureRouting
 import me.devgabi.arcano.plugins.configureSerialization
 
+private const val DEFAULT_PORT = 8080
+private const val DEFAULT_HOST = "0.0.0.0"
+
 fun main() {
-  embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+  val port = getenv("PORT")?.toInt() ?: DEFAULT_PORT
+  val host = getenv("HOST") ?: DEFAULT_HOST
+
+  embeddedServer(Netty, port = port, host = host) {
     configureMonitoring()
     configureSerialization()
     configureRouting()
