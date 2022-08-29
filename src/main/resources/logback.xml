@@ -1,0 +1,18 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <withJansi>true</withJansi>
+
+    <encoder>
+      <pattern>
+        %date{ISO8601} %highlight(%5level) in %cyan(%logger) at %cyan([%thread]) {%mdc}: %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <root level="trace">
+    <appender-ref ref="STDOUT"/>
+  </root>
+  
+  <logger name="org.eclipse.jetty" level="INFO"/>
+  <logger name="io.netty" level="INFO"/>
+</configuration>
