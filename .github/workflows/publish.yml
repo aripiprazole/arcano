@@ -33,7 +33,7 @@ jobs:
           # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
           
-          docker build . -f dockerfile -t gabrielleeg1/arcano:$VERSION
+          docker build . -f dockerfile -t gabrielleeg1/arcano:latest
       
       - name: Push image
         run: docker push ${{ secrets.DOCKER_USER }}/arcano
