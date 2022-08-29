@@ -29,10 +29,11 @@ plugins {
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
 }
 
-group = "com.example"
+group = "me.devgabi"
 version = "0.0.1"
+
 application {
-  mainClass.set("com.example.ApplicationKt")
+  mainClass.set("me.devgabi.arcano.ApplicationKt")
 
   val isDevelopment: Boolean = project.ext.has("development")
   applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
