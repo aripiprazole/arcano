@@ -25,9 +25,12 @@ import me.devgabi.arcano.plugins.configureMonitoring
 import me.devgabi.arcano.plugins.configureRouting
 import me.devgabi.arcano.plugins.configureSerialization
 
+private const val DEFAULT_PORT = 8080
+private const val DEFAULT_HOST = "0.0.0.0"
+
 fun main() {
-  val port = getenv("PORT")?.toInt() ?: 8080
-  val host = getenv("HOST") ?: "0.0.0.0"
+  val port = getenv("PORT")?.toInt() ?: DEFAULT_PORT
+  val host = getenv("HOST") ?: DEFAULT_HOST
 
   embeddedServer(Netty, port = port, host = host) {
     configureMonitoring()
