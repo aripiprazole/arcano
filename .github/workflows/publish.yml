@@ -12,28 +12,37 @@ jobs:
   publish:
     name: publish to docker hub
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Docker login
+        
+      - name: test workflow
+        run: echo $DOCKER_USER
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: docker login
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-          
-          docker build . -f dockerfile -t gabrielleeg1/arcano:latest
-      
-      - name: Push image
-        run: docker push ${{ secrets.DOCKER_USER }}/arcano
+        run: docker build . -f dockerfile -t gabrielleeg1/arcano:latest
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: gabrielleeg1/arcano
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
