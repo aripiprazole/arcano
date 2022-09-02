@@ -16,17 +16,14 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.devgabi.arcano.plugins
+package me.devgabi.arcano.cart
 
-import io.ktor.server.application.Application
-import io.ktor.server.routing.routing
-import me.devgabi.arcano.cart.RestCartService
-import me.devgabi.arcano.cart.routes.createCartRoute
+class RestCartService : CartService {
+  override suspend fun findCart(cartId: Int): Cart? {
+    TODO("Not yet implemented")
+  }
 
-fun Application.configureRouting() {
-  val cartService = RestCartService()
-
-  routing {
-    createCartRoute(cartService)
+  override suspend fun createCart(userId: Int, products: List<Product>): Cart {
+    TODO("Not yet implemented")
   }
 }
