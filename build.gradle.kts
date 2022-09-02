@@ -20,6 +20,7 @@ val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
 val datetimeVersion: String by project
+val mockkVersion: String by project
 
 plugins {
   application
@@ -51,6 +52,8 @@ dependencies {
   implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
+  implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+  testImplementation("io.mockk:mockk:$mockkVersion")
 }
