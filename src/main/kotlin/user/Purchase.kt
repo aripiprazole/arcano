@@ -19,11 +19,10 @@
 package me.devgabi.arcano.user
 
 import kotlinx.serialization.Serializable
+import me.devgabi.arcano.product.Product
 
 @Serializable
-data class CompleteUser(
-  val id: UserId,
-  val name: String,
-  val email: String,
-  val purchases: MutableList<Purchase>,
+data class Purchase(
+  val product: Product,
+  val quantity: Int,
 )
