@@ -18,16 +18,30 @@
 
 package me.devgabi.arcano.plugins
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import kotlinx.serialization.json.Json
+import me.devgabi.arcano.cart.RestCartService
+import me.devgabi.arcano.cart.routes.createCartRoute
+import me.devgabi.arcano.product.RestProductService
+import me.devgabi.arcano.user.RestUserService
 
 fun Application.configureRouting() {
-  routing {
-    get("/") {
-      call.respondText("Hello World!")
+  val client = HttpClient(CIO) {
+    install(ContentNegotiation) {
+      json(Json { ignoreUnknownKeys = true })
     }
+  }
+
+  val userService = RestUserService(client)
+  val productService = RestProductService(client)
+  val cartService = RestCartService(client, userService, productService)
+
+  routing {
+    createCartRoute(cartService)
   }
 }
