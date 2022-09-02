@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-  val id: Int,
+  val id: UserId,
   val email: String,
   val username: String,
   val password: String,
@@ -31,6 +31,8 @@ data class User(
   val phone: String,
   val address: Address,
 )
+
+typealias UserId = Int
 
 @Serializable
 data class Address(

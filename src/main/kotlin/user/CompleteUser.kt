@@ -34,5 +34,3 @@ data class Purchase(
   val product: Product,
   val quantity: Int,
 )
-
-typealias UserId = Int

@@ -22,10 +22,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Product(
-  val id: Int,
+  val id: ProductId,
   val title: String,
   val price: Double,
   val category: String,
   val description: String,
   val image: String,
 )
+
+typealias ProductId = Int

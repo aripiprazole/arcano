@@ -19,9 +19,10 @@
 package me.devgabi.arcano.cart
 
 import kotlinx.serialization.Serializable
+import me.devgabi.arcano.product.ProductId
 
 @Serializable
 data class CartProduct(
-  val productId: Int,
+  val productId: ProductId,
   val quantity: Int,
 )
