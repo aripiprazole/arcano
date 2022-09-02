@@ -23,7 +23,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 
 class RestProductService(private val client: HttpClient) : ProductService {
-  override suspend fun findProduct(productId: Int): Product? {
+  override suspend fun findProduct(productId: ProductId): Product? {
     return client.get("https://fakestoreapi.com/products/$productId").body()
   }
 }

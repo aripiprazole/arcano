@@ -16,18 +16,13 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.devgabi.arcano.product
+package me.devgabi.arcano.user
 
 import kotlinx.serialization.Serializable
+import me.devgabi.arcano.product.Product
 
 @Serializable
-data class Product(
-  val id: ProductId,
-  val title: String,
-  val price: Double,
-  val category: String,
-  val description: String,
-  val image: String,
+data class Purchase(
+  val product: Product,
+  val quantity: Int,
 )
-
-typealias ProductId = Int

@@ -19,9 +19,10 @@
 package me.devgabi.arcano.cart
 
 import me.devgabi.arcano.user.CompleteUser
+import me.devgabi.arcano.user.UserId
 
 interface CartService {
-  suspend fun createCart(userId: Int, products: List<CartProduct>): Cart
+  suspend fun createCart(userId: UserId, products: List<CartProduct>): Cart
 
-  suspend fun getCartHistory(userId: Int): CompleteUser
+  suspend fun getCartHistory(userId: UserId): CompleteUser
 }

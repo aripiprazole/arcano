@@ -43,7 +43,7 @@ class RestCartService(
 ) : CartService {
   private val purchases = hashMapOf<UserId, CompleteUser>()
 
-  override suspend fun createCart(userId: Int, products: List<CartProduct>): Cart {
+  override suspend fun createCart(userId: UserId, products: List<CartProduct>): Cart {
     val localDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC)
 
     val user = purchases.getOrPut(userId) { createCompleteUser(userId) }

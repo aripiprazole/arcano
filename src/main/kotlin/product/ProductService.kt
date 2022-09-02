@@ -19,5 +19,5 @@
 package me.devgabi.arcano.product
 
 interface ProductService {
-  suspend fun findProduct(productId: Int): Product?
+  suspend fun findProduct(productId: ProductId): Product?
 }

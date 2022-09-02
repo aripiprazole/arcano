@@ -23,8 +23,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Cart(
-  val id: Int,
+  val id: CartId,
   val userId: Int,
   val date: LocalDate,
   val products: List<CartProduct>,
 )
+
+typealias CartId = Int
