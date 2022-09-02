@@ -24,7 +24,7 @@ import me.devgabi.arcano.plugins.configureSerialization
 
 class CreateCartRouteTest {
   @Test
-  fun testCreateCartRoute(): Unit = testApplication {
+  fun `test create cart route`(): Unit = testApplication {
     val cartService = mockk<CartService> {
       coEvery { createCart(any(), any()) } returns mockk()
     }
