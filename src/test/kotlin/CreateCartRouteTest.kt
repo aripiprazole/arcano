@@ -15,8 +15,9 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.serialization.json.Json
+import me.devgabi.arcano.cart.CartProduct
 import me.devgabi.arcano.cart.CartService
-import me.devgabi.arcano.cart.Product
 import me.devgabi.arcano.cart.routes.CreateCartRequest
 import me.devgabi.arcano.cart.routes.createCartRoute
 import me.devgabi.arcano.plugins.configureSerialization
@@ -30,7 +31,7 @@ class CreateCartRouteTest {
 
     val client = createClient {
       install(ContentNegotiation) {
-        json()
+        json(Json { ignoreUnknownKeys = true })
       }
     }
 
@@ -41,7 +42,7 @@ class CreateCartRouteTest {
 
     val cart = CreateCartRequest.ClientCart(
       userId = 1,
-      products = listOf(Product(productId = 1, quantity = 1)),
+      products = listOf(CartProduct(productId = 1, quantity = 1)),
     )
 
     client

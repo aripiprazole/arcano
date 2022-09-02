@@ -18,6 +18,10 @@
 
 package me.devgabi.arcano.cart
 
-interface CartService {
-  suspend fun createCart(userId: Int, products: List<CartProduct>): Cart
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class CartProduct(
+  val productId: Int,
+  val quantity: Int,
+)

@@ -26,5 +26,5 @@ data class Cart(
   val id: Int,
   val userId: Int,
   val date: LocalDate,
-  val products: List<Product>,
+  val products: List<CartProduct>,
 )

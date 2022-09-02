@@ -25,8 +25,8 @@ import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
 import kotlinx.serialization.Serializable
+import me.devgabi.arcano.cart.CartProduct
 import me.devgabi.arcano.cart.CartService
-import me.devgabi.arcano.cart.Product
 
 fun Route.createCartRoute(cartService: CartService) {
   post("/cart") {
@@ -43,5 +43,5 @@ fun Route.createCartRoute(cartService: CartService) {
 @Serializable
 data class CreateCartRequest(val carts: List<ClientCart>) {
   @Serializable
-  data class ClientCart(val userId: Int, val products: List<Product>)
+  data class ClientCart(val userId: Int, val products: List<CartProduct>)
 }

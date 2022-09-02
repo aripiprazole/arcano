@@ -30,10 +30,24 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
+import me.devgabi.arcano.product.ProductService
+import me.devgabi.arcano.user.CompleteUser
+import me.devgabi.arcano.user.Purchase
+import me.devgabi.arcano.user.UserId
+import me.devgabi.arcano.user.UserService
 
-class RestCartService(private val client: HttpClient) : CartService {
-  override suspend fun createCart(userId: Int, products: List<Product>): Cart {
+class RestCartService(
+  private val client: HttpClient,
+  private val userService: UserService,
+  private val productService: ProductService,
+) : CartService {
+  private val purchases = hashMapOf<UserId, CompleteUser>()
+
+  override suspend fun createCart(userId: Int, products: List<CartProduct>): Cart {
     val localDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC)
+
+    val user = purchases.getOrPut(userId) { createCompleteUser(userId) }
+    populateUserPurchases(user, products)
 
     return client
       .post("https://fakestoreapi.com/carts") {
@@ -42,7 +56,27 @@ class RestCartService(private val client: HttpClient) : CartService {
       }
       .body()
   }
+
+  private suspend fun populateUserPurchases(user: CompleteUser, products: List<CartProduct>) {
+    products.forEach { (quantity, productId) ->
+      val product = productService.findProduct(productId)
+        ?: error("Product with id $productId not found")
+
+      user.purchases += Purchase(product, quantity)
+    }
+  }
+
+  private suspend fun createCompleteUser(userId: UserId): CompleteUser {
+    val user = userService.findUser(userId)
+      ?: error("User with id $userId not found")
+
+    return CompleteUser(user.id, user.name.toString(), user.email, mutableListOf())
+  }
 }
 
 @Serializable
-data class RestCreateCartRequest(val userId: Int, val date: LocalDate, val products: List<Product>)
+data class RestCreateCartRequest(
+  val userId: Int,
+  val date: LocalDate,
+  val products: List<CartProduct>,
+)
