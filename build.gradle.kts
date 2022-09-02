@@ -31,7 +31,7 @@ plugins {
 }
 
 group = "me.devgabi"
-version = "0.0.1"
+version = "1.0"
 
 application {
   mainClass.set("me.devgabi.arcano.ApplicationKt")
