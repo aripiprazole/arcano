@@ -26,6 +26,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.routing.routing
 import kotlinx.serialization.json.Json
 import me.devgabi.arcano.cart.RestCartService
+import me.devgabi.arcano.cart.routes.cartHistoryRoute
 import me.devgabi.arcano.cart.routes.createCartRoute
 import me.devgabi.arcano.product.RestProductService
 import me.devgabi.arcano.user.RestUserService
@@ -43,5 +44,6 @@ fun Application.configureRouting() {
 
   routing {
     createCartRoute(cartService)
+    cartHistoryRoute(cartService)
   }
 }

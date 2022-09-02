@@ -16,12 +16,20 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.devgabi.arcano.cart
+package me.devgabi.arcano.cart.routes
 
-import me.devgabi.arcano.user.CompleteUser
+import io.ktor.server.application.call
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.util.getValue
+import me.devgabi.arcano.cart.CartService
+import me.devgabi.arcano.user.UserId
 
-interface CartService {
-  suspend fun createCart(userId: Int, products: List<CartProduct>): Cart
+fun Route.cartHistoryRoute(cartService: CartService) {
+  get("cart-history/{userId}") {
+    val userId: UserId by call.parameters
 
-  suspend fun getCartHistory(userId: Int): CompleteUser
+    call.respond(cartService.getCartHistory(userId))
+  }
 }

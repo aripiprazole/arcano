@@ -57,6 +57,10 @@ class RestCartService(
       .body()
   }
 
+  override suspend fun getCartHistory(userId: Int): CompleteUser {
+    return purchases.getOrPut(userId) { createCompleteUser(userId) }
+  }
+
   private suspend fun populateUserPurchases(user: CompleteUser, products: List<CartProduct>) {
     products.forEach { (quantity, productId) ->
       val product = productService.findProduct(productId)
