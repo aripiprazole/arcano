@@ -19,6 +19,7 @@
 val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
+val datetimeVersion: String by project
 
 plugins {
   application
@@ -43,6 +44,7 @@ repositories {
 }
 
 dependencies {
+  implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
   implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
   implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
