@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: Arcano
+  description: Arcano API
+  version: 0.0.1
+servers:
+  - url: 'https'
+paths:
+  /cart:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCart'
+      
+      responses:
+        204:
+          description: Cart successfully created
+    summary: Adds a new cart
+    description: Store a new cart in the runtime database
+  /cart-history:
+    get:
+      responses:
+        200:
+          description: Returns the cart history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompleteUser'
+      
+      parameters:
+        - name: userId
+          in: path
+    summary: Gets the cart history
+    description: Gets the cart history for an specific user with the specified id
+
+components:
+  schemas:
+    CreateCart:
+      type: object
+      properties: 
+        carts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientCart'
+            
+    ClientCart:
+      type: object
+      properties: 
+        userId:
+          type: integer
+          format: int64
+          default: 1
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartProduct'
+            
+    CartProduct:
+      type: object
+      properties: 
+        productId:
+          type: integer
+          format: int64
+          default: 1
+        quantity:
+          type: integer
+          format: int64
+          default: 1
+      
+    CompleteUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          default: 1
+        name:
+          type: string
+          default: John Doe
+        email:
+          type: string
+          default: john@gmail.com
+        purchases:
+          type: array
+          items:
+            $ref: '#/components/schemas/Purchase'
+    Purchase:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          default: 2
+        product:
+          $ref: '#/components/schemas/Product'
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          default: 1
+        title:
+          type: string
+          default: Mens Casual Premium Slim Fit T-Shirts
+        price:
+          type: number
+          format: double
+          default: 22.3
+        category:
+          type: string
+          default: men's clothing
+        description:
+          type: string
+          default: Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.
+        image:
+          type: string
+          format: url
+          default: https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg
