@@ -19,7 +19,5 @@
 package me.devgabi.arcano.cart
 
 interface CartService {
-  suspend fun findCart(cartId: Int): Cart?
-
   suspend fun createCart(userId: Int, products: List<Product>): Cart
 }

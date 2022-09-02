@@ -53,6 +53,7 @@ dependencies {
   implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
   implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+  implementation("io.ktor:ktor-client-cio:$ktorVersion")
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
   testImplementation("io.mockk:mockk:$mockkVersion")

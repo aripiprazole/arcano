@@ -18,12 +18,31 @@
 
 package me.devgabi.arcano.cart
 
-class RestCartService : CartService {
-  override suspend fun findCart(cartId: Int): Cart? {
-    TODO("Not yet implemented")
-  }
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.Serializable
 
+class RestCartService(private val client: HttpClient) : CartService {
   override suspend fun createCart(userId: Int, products: List<Product>): Cart {
-    TODO("Not yet implemented")
+    val localDateTime = Clock.System.now().toLocalDateTime(TimeZone.UTC)
+
+    return client
+      .post("https://fakestoreapi.com/carts") {
+        header(HttpHeaders.ContentType, ContentType.Application.Json)
+        setBody(RestCreateCartRequest(userId, localDateTime.date, products))
+      }
+      .body()
   }
 }
+
+@Serializable
+data class RestCreateCartRequest(val userId: Int, val date: LocalDate, val products: List<Product>)
